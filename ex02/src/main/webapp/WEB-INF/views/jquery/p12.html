@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+ <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+ <script>
+ $(document).ready(function(){ 
+     $("#id").val("aaaaa");
+     $("#a").click( function()
+     {
+     	console.log("확인1클릭");
+     	$("span").text( $("#id").val());
+     });
+     $("#b").click( function()
+     {
+     	console.log("확인2클릭");
+     	$("span").text( $("#pw").val());
+     });
+	 
+	 
+	 
+ });
+ 
+ 
+
+
+    </script>
+</head>
+<body>
+    아이디   :<input type="text" id="id"><br>
+    비밀번호:<input type="password" id="pw"><br>
+  <input id="a" type="submit" value="확인1">
+  <button id="b">확인2</button>
+  <span></span>
+</body>
+</html>

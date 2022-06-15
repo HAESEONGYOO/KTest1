@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+ <script src="http://code.jquery.com/jquery-1.10.1.js"></script>
+ <script>
+ $(document).ready(function(){ 
+
+     $("#a").click( function()
+     {
+     	console.log("확인1클릭");
+     	$("span").text("변신완료");
+     });
+     $("#b").click( function()
+     {
+     	console.log("확인2클릭");
+     	$("span").html("<h2>변신완료<h2>");
+     });
+	 
+	 
+	 
+ });
+ 
+
+    </script>
+</head>
+<body>
+  <span>난 변신합니다.</span><br>
+  <a id="a">변신1</a> 
+  <a id="b">변신2</a>
+</body>
+</html>
