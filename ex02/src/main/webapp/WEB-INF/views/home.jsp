@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <html>
 <meta charset="UTF-8">
 <head>
@@ -10,6 +11,6 @@
 	안녕 세계!  
 </h1>
 
-<P>  서버의 시간은 ${serverTime}. </P>
+<P>  서버의 시간은 ${serverTime}, 입니다. </P>
 </body>
 </html>
