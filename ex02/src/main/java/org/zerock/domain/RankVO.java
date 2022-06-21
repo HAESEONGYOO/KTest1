@@ -1,9 +1,10 @@
 package org.zerock.domain;
 
+
 import lombok.Data;
 
 @Data
-public class titlewriterVO {
-	private String title;
+public class RankVO {
 	private String writer;
+	private int cn;
 }

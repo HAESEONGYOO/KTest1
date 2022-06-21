@@ -5,10 +5,15 @@ import java.util.List;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.CountVO;
 import org.zerock.domain.Criteria;
-import org.zerock.domain.titlewriterVO;
+import org.zerock.domain.RankVO;
 
 public interface BoardMapper {
+	//긂낳이 쓴 순서
+	public List<RankVO> rank();
 	
+	//중복개수
+	public Long overlap();
+		
 	//목록보기
 	public List<BoardVO> getList();
 	
@@ -28,7 +33,7 @@ public interface BoardMapper {
 	public int delete(Long bno);
 	
 	//임의추가 - 글목록 개수
-	public Long count();
+	public Long count(Criteria cri);
 	
 	//글 수정
 	public int update(BoardVO vo);
@@ -40,5 +45,6 @@ public interface BoardMapper {
 	public List<CountVO> quiz1();
 	
 	public List<BoardVO> quiz2();
+	
 		
 }

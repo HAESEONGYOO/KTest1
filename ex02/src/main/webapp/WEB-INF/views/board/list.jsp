@@ -15,7 +15,8 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            게시판 목록보기<a href="/board/register"> 글등록</a> 총글개수(${pageMaker.total})
+                            게시판 목록보기<a href="/board/register"> 글등록</a> 총글개수(${pageMaker.total}) &nbsp;<a href="/board/rank?&pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">랭킹</a>
+                            &nbsp;중복개수(${overlap})
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -28,12 +29,12 @@
                                         <th>작성일</th>
                                         <th>수정일</th>
                                     </tr>
-                                </thead>
-                                <tbody>
+                                </thead>                             
+                                <tbody>                                
                                 <c:forEach var="board" items="${list}" >
                                     <tr class="odd gradeX">
                                         <td>${board.bno}</td>
-                                        <td><a href="/board/get?bno=${board.bno}">${board.title}</a></td>
+                                        <td><a href="/board/get?bno=${board.bno}&pageNum=${pageMaker.cri.pageNum}&amount=${pageMaker.cri.amount}">${board.title}</a></td>
                                         <td><c:out value="${board.writer}" /></td>
                                         <td><fmt:formatDate pattern="yyy-MM-dd" value="${board.regdate}"/></td>
                                         <td><fmt:formatDate pattern="MM-dd- hh:mm" value="${board.updatedate}"/></td>
@@ -41,12 +42,27 @@
                                 </c:forEach>
                                    </tbody>
                             </table>
+                            <form action="/board/list" method="get">
+	                            <select name="type">
+	                                	<option selected>검색조건</option>
+	                                	<option ${pageMaker.cri.type == "T" ? "selected" : ""} value="T">제목</option>
+	                                	<option ${pageMaker.cri.type == "C" ? "selected" : ""} value="C">내용</option>
+	                                	<option ${pageMaker.cri.type == "W" ? "selected" : ""} value="W">작성자</option>
+	                                	<option ${pageMaker.cri.type == "TC" ? "selected" : ""} value="TC">제목 or 내용</option>
+	                                	<option ${pageMaker.cri.type == "TW" ? "selected" : ""} value="TW">제목 or 작성자</option>
+	                                	<option ${pageMaker.cri.type == "CW" ? "selected" : ""} value="CW">내용 or 작성자</option>
+	                                	<option ${pageMaker.cri.type == "TCW" ? "selected" : ""} value="TCW">제목 or 내용 or 작성자</option>
+	                            </select>
+	                            <input type="text" name="keyword" value="${pageMaker.cri.keyword}">
+	                            <input type="submit" value="검색">  
+	                        </form>
+                            <br>                           
                             <c:if test="${pageMaker.prev}">
                             	<a href="/board/list?pageNum=${pageMaker.startPage-1}&amount=${pageMaker.cri.amount}">prev</a>&nbsp;&nbsp;&nbsp;&nbsp;
                             </c:if>
                             
                             <c:forEach begin="${pageMaker.startPage}" end="${pageMaker.endPage}" var="num">
-                            	<a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}">
+                            	<a href="/board/list?pageNum=${num}&amount=${pageMaker.cri.amount}&type=${pageMaker.cri.type}&keyword=${pageMaker.cri.keyword}">
                             	<%-- 현재페이지를 ${param.pageNum} or ${pageMaker.cri.pageNum} or ${critera.pageNum} --%>
                             	<c:if test="${pageMaker.cri.pageNum == num}">                            	
                             	<b>${num}</b>

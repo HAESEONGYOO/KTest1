@@ -26,6 +26,8 @@
 	 						<label>제목</label>
 	 						<input class="form-control"  type="text" name="title"   value="${board.title } ">	
 	 						
+	 						<input type="hidden" value="${criteria.pageNum }" name="pageNum" >	
+	 						<input type="hidden" value="${criteria.amount }" name="amount" >	
 	 						<br> 						
 	 						<label>내용</label>
 	 						<textarea class="form-control"  name="content" rows="3" >${board.content } </textarea>
@@ -38,7 +40,7 @@
 	 					
 	 						<button type="submit" class="btn btn-warning" onclick="location.href='/board/modfiy?bno=${board.bno}'">수정</button>
 	 						<button type="submit" id="deleteButton" class="btn btn-warning" onclick="">삭제</button>
-	 						<button class="btn btn-info" onclick="location.href='/board/list'">목록보기</button>
+	 						<button type="button" class="btn btn-info" onclick="location.href='/board/list?pageNum=${criteria.pageNum}&amount=${criteria.amount}'">목록보기</button>
 	 						</form>
  
  
@@ -72,7 +74,7 @@
 	//삭제 버튼이 클릭되었을때 동작
 	var formObj=$("form");
 	$("#deleteButton").on("click",function(e){
-		e.preventDefault(); //기본적으로 걸려있는 이벤트 무시
+		e.preventDefault(); //기본적으로 걸려있는 이벤트 무시(submit)
 		
 		$("form").attr("action","/board/remove");
 		formObj.submit();

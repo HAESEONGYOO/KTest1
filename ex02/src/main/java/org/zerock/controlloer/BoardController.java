@@ -9,6 +9,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
 import org.zerock.domain.Criteria;
 import org.zerock.domain.PageDTO;
+import org.zerock.domain.RankVO;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -28,7 +29,8 @@ public class BoardController {
 		log.info("list 요청");
 		model.addAttribute("list", service.getList(cri));
 		//model.addAttribute("count", service.count());
-		model.addAttribute("pageMaker",new PageDTO(cri,service.count()));
+		model.addAttribute("pageMaker",new PageDTO(cri,service.count(cri)));
+		model.addAttribute("overlap",service.overlap());
 	}
 	
 	//등록하기위한 화면요청
@@ -47,30 +49,40 @@ public class BoardController {
 	}
 	
 	//조회 /get?bno=13(get) -> /board/get.jsp , 수정화면 열기 /modify(get) -> /board/modify.jsp
+	//변경 /get?bno=13&pageNum=2&amount=10
 	@GetMapping({"/get","/modify"})
-	public void get(Long bno,Model model) {
+	public void get(Long bno,Criteria cri,Model model) {
 		model.addAttribute("board", service.get(bno));
 	}
 	
 	//삭제 /romove(post) -> 요청 /board/list
 	@PostMapping("/remove")
-	public String remove(Long bno,RedirectAttributes rttr) {
+	public String remove(Long bno,Criteria cri,RedirectAttributes rttr) {
 		if(service.remove(bno))
 			rttr.addFlashAttribute("state", "remove");
-		return "redirect:/board/list";
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount();
 	}
 	
 		
 	//수정 /modify(post) -> 요청 /board/list
 	@PostMapping("/modify")
-	public String modify(BoardVO vo,RedirectAttributes rttr) {
+	public String modify(BoardVO vo,Criteria cri,RedirectAttributes rttr) {
 		if(service.modify(vo))
 			rttr.addFlashAttribute("state", "modify");
-		return "redirect:/board/list";
+		return "redirect:/board/list?pageNum="+cri.getPageNum()+"&amount="+cri.getAmount();
 	}
 	
 	@PostMapping("count")
-	public void count(Model model) {
-		model.addAttribute("count", service.count());
+	public void count(Model model,Criteria cri) {
+		model.addAttribute("count", service.count(cri));
 	}
+	
+	//수정 /modify(post) -> 요청 /board/ranking
+	@GetMapping("/rank")
+	public void rank(Criteria cri,Model model) {
+		model.addAttribute("rank", service.rank());
+	}
+	
+	
+	
 }
